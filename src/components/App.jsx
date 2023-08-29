@@ -12,16 +12,23 @@ export class App extends Component {
     ],
     filter: '',
   };
-  addBookChild = newContact => {
+
+  handleAddBook = newContact => {
+    if (this.handleExists(newContact.name)) {
+      alert('Contact with this name already exists!');
+      return;
+    }
     this.setState(prevState => {
       return {
         contacts: [...prevState.contacts, newContact],
       };
     });
   };
-  filterChange = event => {
-    this.setState({ filter: event.target.value });
+
+  handleFilterChange = newFilter => {
+    this.setState({ filter: newFilter });
   };
+
   onDelete = delId => {
     this.setState(prevState => {
       return {
@@ -29,6 +36,14 @@ export class App extends Component {
       };
     });
   };
+
+  handleExists = newName => {
+    return this.state.contacts.some(
+      contact =>
+        contact.name.toLocaleLowerCase() === newName.toLocaleLowerCase()
+    );
+  };
+
   render() {
     const filteredContactList = this.state.contacts.filter(contact => {
       return contact.name
@@ -38,10 +53,13 @@ export class App extends Component {
     return (
       <>
         <h1>Phonebook</h1>
-        <AddContact addContact={this.addBookChild} />
+        <AddContact addContact={this.handleAddBook} />
         <h2>Contacts</h2>
-        <Filter value={this.state.filter} filter={this.filterChange} />
-        <ListOfContacts contacts={filteredContactList} onDelete={this.onDelete}/>
+        <Filter propValue={this.state.filter} filter={this.handleFilterChange} />
+        <ListOfContacts
+          contacts={filteredContactList}
+          onDelete={this.onDelete}
+        />
       </>
     );
   }
