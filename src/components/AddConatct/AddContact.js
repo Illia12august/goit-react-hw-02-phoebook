@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid';
-import { ErrorMessage, Formik, Form, Field } from 'formik';
+import { Formik } from 'formik';
 import { Component } from 'react';
 
 import * as Yup from 'yup';
+import { AddContactBtn, Container, InputEl, StyledError, StyledForm } from './AddContact.styled';
 const contactValidation = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too short!')
@@ -32,17 +33,19 @@ export default class AddContact extends Component {
         validationSchema={contactValidation}
       >
         {({ isSubmitting }) => (
-          <Form>
-            Name
-            <Field type="text" name="name" placeholder="Ariana Grande" />
-            <ErrorMessage name="name" />
-            Number
-            <Field type="text" name="phoneNumber" placeholder="123-45-67" />
-            <ErrorMessage name="phoneNumber" />
-            <button type="submit" disabled={isSubmitting}>
+          <StyledForm>
+            <Container>
+            <label>Name</label>
+            <InputEl type="text" name="name" placeholder="Ariana Grande" />
+            <StyledError name="name" />
+            <label>Number</label>
+            <InputEl type="text" name="phoneNumber" placeholder="123-45-67" />
+            <StyledError name="phoneNumber" />
+            <AddContactBtn type="submit" disabled={isSubmitting}>
               Add contact
-            </button>
-          </Form>
+            </AddContactBtn>
+            </Container>
+          </StyledForm>
         )}
       </Formik>
     );

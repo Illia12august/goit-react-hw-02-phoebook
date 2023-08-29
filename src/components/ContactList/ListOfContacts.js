@@ -1,3 +1,5 @@
+import { ListItem, DeleteBtn } from "./ListOfContacts.styled";
+
 export default function ListOfContacts({contacts, onDelete}) {
     return (
       <>
@@ -5,12 +7,12 @@ export default function ListOfContacts({contacts, onDelete}) {
         {contacts.map(contItem => {
           const { id, name, number } = contItem;
           return (
-            <li key={id}>
+            <ListItem key={id}>
               <p>
                 {name}: {number}
               </p>
-              <button type="button" onClick={() => onDelete(id)}>Delete</button>
-            </li>
+              <DeleteBtn type='button' onClick={() => onDelete(id)}>Delete</DeleteBtn>
+            </ListItem>
           );
         })}
       </ul>
